@@ -3,6 +3,10 @@
   hosts: n1
   become: yes
 
+  vars:
+    flask_app_directory: /home/centos/jenkins-ansible-flask-1
+    flask_app_repo: git@github.com:kesienaf/flask-repo.git
+
   tasks:
     - name: Update package cache
       yum:
@@ -17,9 +21,17 @@
         - python3
         - python3-pip
         - httpd
+        - git
         - gcc
         - nginx
         - epel-release
+        - supervisor
+
+    - name: Clone Flask app repository
+      git:
+        repo: "{{ git@github.com:kesienaf/flask-repo.git }}"
+        dest: "{{ /home/centos/jenkins-ansible-flask-1 }}"
+        version: master
 
     - name: Install virtualenv
       pip:
@@ -27,11 +39,20 @@
         state: present
 
     - name: Create virtual environment
-      command: python3 -m venv /path/to/venv
+      command: python3 -m venv venv
+      args:
+        chdir: "{{ /home/centos/jenkins-ansible-flask-1 }}"
+      environment:
+        PATH: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv/bin:{{ ansible_env.PATH }}"
 
     - name: Activate virtual environment
-      command: source /path/to/venv/bin/activate
+      command: source /home/centos/jenkins-ansible-flask-1/venv/bin/activate
 
+    - name: Install Flask dependencies
+      pip:
+        requirements: "{{ /home/centos/jenkins-ansible-flask-1 }}/requirements.txt"
+        virtualenv: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv"
+      
     - name: Install Flask
       pip:
         name: Flask
@@ -39,29 +60,44 @@
 
     - name: Configure Firewall
       firewalld:
-        service: http
+        service: httpd
         permanent: yes
         state: enabled
       notify:
         - restart firewalld
 
-    - name: Copy Nginx configuration file
-      copy:
-        src: nginx.conf
-        dest: /etc/nginx/nginx.conf
+    - name: Configure Nginx
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/sites-available/flask_app
       notify:
-        - restart nginx
+        - Reload Nginx
+
+    - name: Create symbolic link for Nginx configuration
+      file:
+        src: /etc/nginx/sites-available/flask_app
+        dest: /etc/nginx/sites-enabled/flask_app
+        state: link
+      notify:
+        - Reload Nginx
 
     - name: Start Nginx service
       service:
         name: nginx
         state: started
 
+    - name: Configure Supervisor
+      template:
+        src: supervisor.conf.j2
+        dest: /etc/supervisor/conf.d/flask_app.conf
+      notify:
+        - Restart Supervisor
+    
     - name: Configure and start Flask web app
       command: gunicorn your_app:app
       args:
-        chdir: /path/to/your/app
-        virtualenv: /path/to/venv
+        chdir: /home/centos/jenkins-ansible-flask-1
+        virtualenv: /home/centos/jenkins-ansible-flask-1/venv
         stdout_logfile: /var/log/gunicorn.log
         stderr_logfile: /var/log/gunicorn.log
       notify:
