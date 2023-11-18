@@ -27,8 +27,8 @@
 
     - name: Clone Flask app repository
       git:
-        repo: "{{ flask_app_repo }}"
-        dest: "{{ flask_app_directory }}"
+        repo: "{{ git@github.com:kesienaf/flask-repo.git }}"
+        dest: "{{ /home/centos/jenkins-ansible-flask-1 }}"
         version: master
       environment:
         GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no'
@@ -41,17 +41,17 @@
     - name: Create virtual environment
       command: python3 -m venv venv
       args:
-        chdir: "{{ flask_app_directory }}"
+        chdir: "{{ /home/centos/jenkins-ansible-flask-1 }}"
       environment:
-        PATH: "{{ flask_app_directory }}/venv/bin:{{ ansible_env.PATH }}"
+        PATH: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv/bin:{{ ansible_env.PATH }}"
 
     - name: Activate virtual environment
       command: source /home/centos/jenkins-ansible-flask-1/venv/bin/activate
 
     - name: Install Flask dependencies
       pip:
-        requirements: "{{ flask_app_directory }}/requirements.txt"
-        virtualenv: "{{ flask_app_directory }}/venv"
+        requirements: "{{ /home/centos/jenkins-ansible-flask-1 }}/requirements.txt"
+        virtualenv: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv"
 
     - name: Install Flask
       pip:
@@ -96,8 +96,8 @@
     - name: Configure and start Flask web app
       command: gunicorn your_app:app
       args:
-        chdir: "{{ flask_app_directory }}"
-        virtualenv: "{{ flask_app_directory }}/venv"
+        chdir: "{{ /home/centos/jenkins-ansible-flask-1 }}"
+        virtualenv: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv"
         stdout_logfile: /var/log/gunicorn.log
         stderr_logfile: /var/log/gunicorn.log
       notify:
