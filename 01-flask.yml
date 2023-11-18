@@ -8,6 +8,11 @@
     flask_app_repo: git@github.com:kesienaf/flask-repo.git
 
   tasks:
+    - name: Install EPEL repository
+      yum:
+        name: epel-release
+      state: present
+
     - name: Install required packages
       yum:
         name:
@@ -17,7 +22,6 @@
           - git
           - gcc
           - nginx
-          - epel-release
           - supervisor
         state: present
 
