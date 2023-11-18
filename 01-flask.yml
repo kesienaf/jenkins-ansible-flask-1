@@ -50,7 +50,7 @@
       pip:
         requirements: "{{ /home/centos/jenkins-ansible-flask-1 }}/requirements.txt"
         virtualenv: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv"
-      
+
     - name: Install Flask
       pip:
         name: Flask
@@ -90,7 +90,7 @@
         dest: /etc/supervisor/conf.d/flask_app.conf
       notify:
         - Restart Supervisor
-    
+
     - name: Configure and start Flask web app
       command: gunicorn your_app:app
       args:
@@ -116,3 +116,4 @@
       service:
         name: gunicorn
         state: restarted
+...
