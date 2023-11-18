@@ -27,7 +27,7 @@
 
     - name: Clone Flask app repository
       git:
-        repo: "{{ git@github.com:kesienaf/flask-repo.git }}"
+        repo: git@github.com:kesienaf/flask-repo.git
         dest: "{{ /home/centos/jenkins-ansible-flask-1 }}"
         version: master
       environment:
