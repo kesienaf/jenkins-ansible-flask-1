@@ -1,0 +1,84 @@
+---
+- name: Provision and Configure Flask Web App
+  hosts: n1
+  become: yes
+
+  tasks:
+    - name: Update package cache
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install required packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - python3
+        - python3-pip
+        - httpd
+        - gcc
+        - nginx
+        - epel-release
+
+    - name: Install virtualenv
+      pip:
+        name: virtualenv
+        state: present
+
+    - name: Create virtual environment
+      command: python3 -m venv /path/to/venv
+
+    - name: Activate virtual environment
+      command: source /path/to/venv/bin/activate
+
+    - name: Install Flask
+      pip:
+        name: Flask
+        state: present
+
+    - name: Configure Firewall
+      firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+      notify:
+        - restart firewalld
+
+    - name: Copy Nginx configuration file
+      copy:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - restart nginx
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+
+    - name: Configure and start Flask web app
+      command: gunicorn your_app:app
+      args:
+        chdir: /path/to/your/app
+        virtualenv: /path/to/venv
+        stdout_logfile: /var/log/gunicorn.log
+        stderr_logfile: /var/log/gunicorn.log
+      notify:
+        - restart gunicorn
+
+  handlers:
+    - name: restart firewalld
+      service:
+        name: firewalld
+        state: restarted
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+
+    - name: restart gunicorn
+      service:
+        name: gunicorn
+        state: restarted

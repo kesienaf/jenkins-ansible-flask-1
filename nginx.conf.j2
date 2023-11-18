@@ -10,15 +10,15 @@ server {
     }
 
     location /static {
-        alias {{ flask_app_directory }}/static;
+        alias {{ /home/centos/jenkins-ansible-flask-1 }}/static;
     }
 
     location /uploads {
-        alias {{ flask_app_directory }}/uploads;
+        alias {{ /home/centos/jenkins-ansible-flask-1 }}/uploads;
     }
 
     error_page 500 502 503 504 /500.html;
     location = /500.html {
-        root {{ flask_app_directory }}/templates/;
+        root {{ /home/centos/jenkins-ansible-flask-1 }}/templates/;
     }
 }
