@@ -30,6 +30,8 @@
         repo: "{{ flask_app_repo }}"
         dest: "{{ flask_app_directory }}"
         version: master
+      environment:
+        GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no'
 
     - name: Install virtualenv
       pip:
