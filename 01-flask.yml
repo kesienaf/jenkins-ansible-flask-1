@@ -38,10 +38,14 @@
       environment:
         GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no'
 
-    - name: Ensure pip is installed
-      yum:
-        name: python3-pip
-        state: present
+    - name: Install pip using get_pip.py
+      command: >
+        python3 -m ensurepip
+      && python3 -m pip install --upgrade pip
+      args:
+        chdir: "{{ /home/centos/jenkins-ansible-flask-1 }}"
+      environment:
+        PATH: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv/bin:{{ ansible_env.PATH }}"
 
     - name: Install virtualenv
       pip:
