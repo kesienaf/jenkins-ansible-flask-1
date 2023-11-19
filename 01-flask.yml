@@ -88,9 +88,7 @@
 
     - name: Configure Firewall
       firewalld:
-        port:
-          - 80/tcp
-          - 5000/tcp
+        port: 5000/tcp
         permanent: yes
         state: enabled
       notify:
