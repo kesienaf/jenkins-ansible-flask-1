@@ -156,7 +156,7 @@
     - name: Run the Flask app using Gunicorn
       command: gunicorn app:app -b 127.0.0.1:8000 --daemon
       args:
-        chdir: /home/centos/jenkins-ansible-flask-1
+        chdir: "{{ flask_app_directory }}"
       become: true
   
   handlers:
