@@ -94,6 +94,11 @@
       notify:
         - restart firewalld
 
+    - name: Create Nginx sites-available directory
+      file:
+        path: /etc/nginx/sites-available
+        state: directory
+
     - name: Configure Nginx
       template:
         src: nginx.conf.j2
@@ -113,11 +118,6 @@
       service:
         name: nginx
         state: started
-
-    - name: Create Nginx sites-available directory
-      file:
-        path: /etc/nginx/sites-available
-        state: directory
 
     - name: Configure Supervisor
       template:
