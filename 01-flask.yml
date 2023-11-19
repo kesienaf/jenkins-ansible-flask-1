@@ -41,7 +41,7 @@
     - name: Install pip using get_pip.py
       command: >
         python3 -m ensurepip
-      && python3 -m pip install --upgrade pip
+        && python3 -m pip install --upgrade pip
       args:
         chdir: "{{ /home/centos/jenkins-ansible-flask-1 }}"
       environment:
