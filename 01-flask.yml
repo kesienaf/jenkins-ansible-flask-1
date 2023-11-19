@@ -150,6 +150,12 @@
       notify:
         - restart supervisor
 
+    - name: Start Flask app
+      become: true
+      command: "/bin/bash -c 'source {{ flask_app_directory }}/venv/bin/activate && export FLASK_APP={{ flask_app_directory }}/flask.py && nohup {{ flask_app_directory }}/venv/bin/flask run --host=0.0.0.0 &'"
+      async: 0
+      poll: 0
+
     - name: Configure and start Flask web app
       shell: |
         {{ flask_app_directory }}/venv/bin/gunicorn your_app:app \
