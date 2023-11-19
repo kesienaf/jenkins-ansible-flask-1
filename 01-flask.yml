@@ -180,6 +180,6 @@
     
     - name: restart supervisor
       service:
-        name: supervisor
+        name: supervisord # Use 'supervisord' as the service name
         state: restarted
 ...
