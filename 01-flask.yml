@@ -81,7 +81,7 @@
         state: present
 
     - name: Install Firewall
-      pip:
+      yum:
         name: firewalld
         executable: pip3
         state: present
