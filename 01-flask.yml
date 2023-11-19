@@ -134,7 +134,7 @@
         src: supervisor.conf.j2
         dest: /etc/supervisor/conf.d/flask_app.conf
       notify:
-        - Restart Supervisor
+        - restart supervisor
 
     - name: Configure and start Flask web app
       command: gunicorn your_app:app
