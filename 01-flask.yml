@@ -81,7 +81,7 @@
         executable: pip3
         state: present
 
-    - name: Install Flask
+    - name: Install Gunicorn
       pip:
         name: gunicorn
         executable: pip3
