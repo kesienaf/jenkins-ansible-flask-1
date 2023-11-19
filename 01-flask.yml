@@ -86,7 +86,7 @@
         name: gunicorn
         executable: pip3
         state: present
-        
+
     - name: Install Firewall
       yum:
         name: firewalld
@@ -94,7 +94,7 @@
 
     - name: Configure Firewall
       firewalld:
-        port: 5000/tcp
+        port: 8000/tcp
         permanent: yes
         state: enabled
       notify:
@@ -153,9 +153,12 @@
       notify:
         - restart gunicorn
 
-      notify:
-        - restart gunicorn
-
+    - name: Run the Flask app using Gunicorn
+      command: gunicorn app:app -b 127.0.0.1:8000 --daemon
+      args:
+        chdir: /home/centos/jenkins-ansible-flask-1
+      become: true
+  
   handlers:
     - name: restart firewalld
       service:
