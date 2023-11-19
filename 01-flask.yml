@@ -104,7 +104,7 @@
         src: nginx.conf.j2
         dest: /etc/nginx/sites-available/flask_app
       notify:
-        - Reload Nginx
+        - restart nginx
 
     - name: Create symbolic link for Nginx configuration
       file:
@@ -112,7 +112,7 @@
         dest: /etc/nginx/sites-enabled/flask_app
         state: link
       notify:
-        - Reload Nginx
+        - restart nginx
 
     - name: Start Nginx service
       service:
