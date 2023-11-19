@@ -33,7 +33,7 @@
     - name: Clone Flask app repository
       git:
         repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
-        dest: /home/centos/jenkins-ansible-flask-1
+        dest: "{{ flask_app_directory }}"
         version: main
       environment:
         GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no'
