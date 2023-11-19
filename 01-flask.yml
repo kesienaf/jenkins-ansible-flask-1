@@ -55,6 +55,7 @@
     - name: Install virtualenv
       pip:
         name: virtualenv
+        executable: pip3
         state: present
 
     - name: Create virtual environment
