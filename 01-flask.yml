@@ -43,9 +43,9 @@
         python3 -m ensurepip
         && python3 -m pip install --upgrade pip
       args:
-        chdir: "{{ /home/centos/jenkins-ansible-flask-1 }}"
+        chdir: "{{ flask_app_directory }}"
       environment:
-        PATH: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv/bin:{{ ansible_env.PATH }}"
+        PATH: "{{ flask_app_directory }}/venv/bin:{{ ansible_env.PATH }}"
 
     - name: Install virtualenv
       pip:
@@ -55,17 +55,17 @@
     - name: Create virtual environment
       command: python3 -m venv venv
       args:
-        chdir: "{{ /home/centos/jenkins-ansible-flask-1 }}"
+        chdir: "{{ flask_app_directory }}"
       environment:
-        PATH: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv/bin:{{ ansible_env.PATH }}"
+        PATH: "{{ flask_app_directory }}/venv/bin:{{ ansible_env.PATH }}"
 
     - name: Activate virtual environment
-      command: source /home/centos/jenkins-ansible-flask-1/venv/bin/activate
+      command: source /venv/bin/activate
 
     - name: Install Flask dependencies
       pip:
-        requirements: "{{ /home/centos/jenkins-ansible-flask-1 }}/requirements.txt"
-        virtualenv: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv"
+        requirements: "{{ flask_app_directory }}/requirements.txt"
+        virtualenv: "{{ flask_app_directory }}/venv"
 
     - name: Install Flask
       pip:
@@ -110,8 +110,8 @@
     - name: Configure and start Flask web app
       command: gunicorn your_app:app
       args:
-        chdir: "{{ /home/centos/jenkins-ansible-flask-1 }}"
-        virtualenv: "{{ /home/centos/jenkins-ansible-flask-1 }}/venv"
+        chdir: "{{ flask_app_directory }}"
+        virtualenv: "{{ flask_app_directory }}/venv"
         stdout_logfile: /var/log/gunicorn.log
         stderr_logfile: /var/log/gunicorn.log
       notify:
