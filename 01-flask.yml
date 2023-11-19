@@ -39,13 +39,13 @@
         GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no'
 
     - name: Install pip using get_pip.py
-      command: >
-        python3 -m ensurepip
-        && python3 -m pip install --upgrade pip
+      command:
+        cmd: "python3 -m ensurepip && python3 -m pip install --upgrade pip"
       args:
         chdir: "{{ flask_app_directory }}"
       environment:
         PATH: "{{ flask_app_directory }}/venv/bin:{{ ansible_env.PATH }}"
+
 
     - name: Install virtualenv
       pip:
@@ -60,7 +60,7 @@
         PATH: "{{ flask_app_directory }}/venv/bin:{{ ansible_env.PATH }}"
 
     - name: Activate virtual environment
-      command: source /venv/bin/activate
+      command: source {{ flask_app_directory }}/venv/bin/activate
 
     - name: Install Flask dependencies
       pip:
