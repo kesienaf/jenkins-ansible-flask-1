@@ -155,6 +155,11 @@
         path: /etc/supervisor/conf.d
         state: directory
 
+    - name: Install Supervisor
+      yum:
+        name: supervisor
+        state: present
+
     - name: Configure Supervisor
       template:
         src: supervisor.conf.j2
