@@ -149,21 +149,6 @@
         dest: /etc/supervisor/conf.d/flask_app.conf
       notify:
         - restart supervisor
-
-    - name: Start Flask app
-      become: true
-      command: "/bin/bash -c 'source {{ flask_app_directory }}/venv/bin/activate && export FLASK_APP={{ flask_app_directory }}/flask.py && nohup {{ flask_app_directory }}/venv/bin/flask run --host=0.0.0.0 &'"
-      async: 0
-      poll: 0
-
-    - name: Configure and start Flask web app
-      shell: |
-        {{ flask_app_directory }}/venv/bin/gunicorn your_app:app \
-        -w 4 -b 127.0.0.1:8000 \
-        --chdir={{ flask_app_directory }} \
-        --daemon \
-      notify:
-        - restart gunicorn
   
   handlers:
     - name: restart firewalld
@@ -174,10 +159,5 @@
     - name: restart nginx
       service:
         name: nginx
-        state: restarted
-
-    - name: restart gunicorn
-      service:
-        name: <actual_gunicorn_service_name>
         state: restarted
 ...
