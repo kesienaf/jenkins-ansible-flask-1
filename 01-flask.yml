@@ -124,6 +124,11 @@
         name: nginx
         state: started
 
+    - name: Create Supervisor conf.d directory
+      file:
+        path: /etc/supervisor/conf.d
+        state: directory
+
     - name: Configure Supervisor
       template:
         src: supervisor.conf.j2
