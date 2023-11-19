@@ -84,7 +84,6 @@
     - name: Install Firewall
       yum:
         name: firewalld
-        executable: pip3
         state: present
 
     - name: Configure Firewall
