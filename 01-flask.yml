@@ -34,7 +34,7 @@
       git:
         repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
         dest: /home/centos/jenkins-ansible-flask-1
-        version: master
+        version: main
       environment:
         GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no'
 
