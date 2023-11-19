@@ -24,9 +24,7 @@
           - python3
           - python3-devel
           - python3-pip
-          - httpd
           - git
-          - gcc
           - nginx
           - supervisor
         state: present
@@ -113,7 +111,7 @@
         name: firewalld
         state: restarted
       become: yes
-      
+
     - name: Create Nginx sites-available directory
       file:
         path: /etc/nginx/sites-available
