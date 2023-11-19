@@ -81,6 +81,12 @@
         executable: pip3
         state: present
 
+    - name: Install Flask
+      pip:
+        name: gunicorn
+        executable: pip3
+        state: present
+        
     - name: Install Firewall
       yum:
         name: firewalld
