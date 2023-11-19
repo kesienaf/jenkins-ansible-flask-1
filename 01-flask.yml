@@ -108,6 +108,12 @@
       notify:
         - restart firewalld
 
+    - name: Restart firewalld
+      systemd:
+        name: firewalld
+        state: restarted
+      become: yes
+      
     - name: Create Nginx sites-available directory
       file:
         path: /etc/nginx/sites-available
