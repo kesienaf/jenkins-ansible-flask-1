@@ -114,6 +114,11 @@
         name: nginx
         state: started
 
+    - name: Create Nginx sites-available directory
+      file:
+        path: /etc/nginx/sites-available
+        state: directory
+
     - name: Configure Supervisor
       template:
         src: supervisor.conf.j2
