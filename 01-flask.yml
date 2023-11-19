@@ -163,6 +163,6 @@
 
     - name: restart gunicorn
       service:
-        name: gunicorn
+        name: gunicorn # Adjust this to the actual service name
         state: restarted
 ...
