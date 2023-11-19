@@ -152,12 +152,6 @@
         --access-logfile=/var/log/gunicorn.log
       notify:
         - restart gunicorn
-
-    - name: Run the Flask app using Gunicorn
-      command: gunicorn app:app -b 127.0.0.1:8000 --daemon
-      args:
-        chdir: "{{ flask_app_directory }}"
-      become: true
   
   handlers:
     - name: restart firewalld
@@ -168,10 +162,5 @@
     - name: restart nginx
       service:
         name: nginx
-        state: restarted
-
-    - name: restart gunicorn
-      service:
-        name: gunicorn # Adjust this to the actual service name
         state: restarted
 ...
