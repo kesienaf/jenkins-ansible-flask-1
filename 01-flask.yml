@@ -80,6 +80,12 @@
         executable: pip3
         state: present
 
+    - name: Install Firewall
+      pip:
+        name: firewalld
+        executable: pip3
+        state: present
+
     - name: Configure Firewall
       firewalld:
         service: httpd
