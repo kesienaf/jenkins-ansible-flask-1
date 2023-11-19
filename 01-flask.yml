@@ -5,9 +5,14 @@
 
   vars:
     flask_app_directory: /home/centos/jenkins-ansible-flask-1
-    flask_app_repo: git@github.com:kesienaf/flask-repo.git
+    flask_app_repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
 
   tasks:
+    - name: Update package cache
+      yum:
+        name: '*'
+        state: latest
+
     - name: Install EPEL repository
       yum:
         name: epel-release
@@ -27,7 +32,7 @@
 
     - name: Clone Flask app repository
       git:
-        repo: git@github.com:kesienaf/flask-repo.git
+        repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
         dest: /home/centos/jenkins-ansible-flask-1
         version: master
       environment:
