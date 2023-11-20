@@ -9,7 +9,7 @@
 
   tasks:
     - name: Start App
-      command: "nohup python3 /home/centos/jenkins-ansible-flask-1/app.py &""
+      command: "nohup python3 /home/centos/jenkins-ansible-flask-1/app.py &"
     
     - name: Delay stop of flask app
       pause:
