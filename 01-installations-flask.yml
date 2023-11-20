@@ -4,8 +4,8 @@
   become: yes
 
   vars:
-    flask_app_directory: /home/centos/flask-repo
-    flask_app_repo: https://github.com/kesienaf/flask-repo.git
+    flask_app_directory: /home/centos/jenkins-ansible-flask-1
+    flask_app_repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
 
   tasks:
     - name: Update package cache (CentOS)
@@ -34,7 +34,7 @@
 
     - name: Clone Flask app repository
       git:
-        repo: https://github.com/kesienaf/flask-repo.git
+        repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
         dest: "{{ flask_app_directory }}"
         version: main
       environment:
