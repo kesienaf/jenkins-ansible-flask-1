@@ -18,7 +18,7 @@
         seconds: 60
     
     - name: Find and Kill Flask Process
-      shell: "pkill -f 'python3 app.py'"
+      shell: "pkill -f 'app.py'"
       ignore_errors: yes  # Ignore errors if the process is not found
     
     - name: Wait for Process to be Killed
