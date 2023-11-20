@@ -6,21 +6,22 @@
   vars:
     flask_app_directory: /home/centos/jenkins-ansible-flask-1
     flask_app_repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
-    package_manager: "{{ 'yum' if ansible_distribution == 'CentOS' else 'dnf' }}"
 
   tasks:
     - name: Update package cache
-      "{{ package_manager }}": 
+      yum:
         name: '*'
         state: latest
+      when: ansible_distribution == 'CentOS'
 
     - name: Install EPEL repository
-      "{{ package_manager }}": 
+      yum:
         name: epel-release
         state: present
+      when: ansible_distribution == 'CentOS'
 
     - name: Install required packages
-      "{{ package_manager }}": 
+      yum:
         name:
           - python3
           - python3-devel
@@ -29,6 +30,31 @@
           - nginx
           - supervisor
         state: present
+      when: ansible_distribution == 'CentOS'
+
+    - name: Update package cache
+      dnf:
+        name: '*'
+        state: latest
+      when: ansible_distribution == "Amazon"
+
+    - name: Install EPEL repository
+      dnf:
+        name: epel-release
+        state: present
+      when: ansible_distribution == "Amazon"
+
+    - name: Install required packages
+      dnf:
+        name:
+          - python3
+          - python3-devel
+          - python3-pip
+          - git
+          - nginx
+          - supervisor
+        state: present
+      when: ansible_distribution == "Amazon"
 
     - name: Clone Flask app repository
       git:
