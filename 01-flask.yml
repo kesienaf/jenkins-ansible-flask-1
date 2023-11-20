@@ -1,6 +1,6 @@
 ---
 - name: Provision and Configure Flask Web App
-  hosts: n1
+  hosts: g1
   become: yes
 
   vars:
