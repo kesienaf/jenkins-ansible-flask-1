@@ -39,7 +39,7 @@
       when: ansible_distribution == "Amazon"
 
     - name: Install EPEL repository (Amazon Linux)
-      yum:
+      dnf:
         name: epel-release
         state: present
       when: ansible_distribution == "Amazon"
