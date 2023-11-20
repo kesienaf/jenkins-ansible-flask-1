@@ -10,17 +10,17 @@
 
   tasks:
     - name: Update package cache
-      "{{ package_manager }}":
+      "{{ package_manager }}": 
         name: '*'
         state: latest
 
     - name: Install EPEL repository
-      "{{ package_manager }}":
+      "{{ package_manager }}": 
         name: epel-release
         state: present
 
     - name: Install required packages
-      "{{ package_manager }}":
+      "{{ package_manager }}": 
         name:
           - python3
           - python3-devel
