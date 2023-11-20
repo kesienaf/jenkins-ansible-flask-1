@@ -6,7 +6,7 @@
   vars:
     flask_app_directory: /home/centos/jenkins-ansible-flask-1
     flask_app_repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
-    package_manager: "{{ 'yum' if ansible_user == 'centos' else 'dnf' }}"
+    package_manager: "{{ 'yum' if ansible_distribution == 'CentOS' else 'dnf' }}"
 
   tasks:
     - name: Update package cache
