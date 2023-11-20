@@ -64,6 +64,10 @@
       environment:
         PATH: "{{ flask_app_directory }}/venv/bin:{{ ansible_env.PATH }}"
 
+    - name: Activate virtual environment
+      command: "/bin/bash -c 'source {{ flask_app_directory }}/venv/bin/activate'"
+      become: yes
+
     - name: Install Flask dependencies
       pip:
         requirements: "{{ flask_app_directory }}/requirements.txt"
@@ -128,6 +132,24 @@
       notify:
         - restart nginx
 
+    - name: Create Nginx sites-enabled directory
+      file:
+        path: /etc/nginx/sites-enabled
+        state: directory
+
+    - name: Create symbolic link for Nginx configuration
+      file:
+        src: /etc/nginx/sites-available/flask_app
+        dest: /etc/nginx/sites-enabled/flask_app
+        state: link
+      notify:
+        - restart nginx
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+
     - name: Create Supervisor conf.d directory
       file:
         path: /etc/supervisor/conf.d
@@ -137,4 +159,27 @@
       yum:
         name: supervisor
         state: present
+
+    - name: Configure Supervisor
+      template:
+        src: supervisor.conf.j2
+        dest: /etc/supervisor/conf.d/flask_app.conf
+      notify:
+        - restart supervisor
+  
+  handlers:
+    - name: restart firewalld
+      service:
+        name: firewalld
+        state: restarted
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+    
+    - name: restart supervisor
+      service:
+        name: supervisord # Use 'supervisord' as the service name
+        state: restarted
 ...
