@@ -10,4 +10,16 @@
   tasks:
     - name: Start App
       command: python3 /home/centos/jenkins-ansible-flask-1/app.py
+    
+    - name: Delay stop of flask app
+      pause:
+        seconds: 30
+    
+    - name: Find and Kill Flask Process
+      shell: "pkill -f 'python3 app.py'"
+      ignore_errors: yes  # Ignore errors if the process is not found
+    
+    - name: Wait for Process to be Killed
+      pause:
+        seconds: 5  # Adjust the duration as needed
 ...
