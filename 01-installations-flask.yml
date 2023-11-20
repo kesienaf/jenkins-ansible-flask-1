@@ -40,7 +40,7 @@
 
     - name: Install EPEL repository (Amazon Linux)
       dnf:
-        name: epel-release
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
         state: present
       when: ansible_distribution == "Amazon"
 
