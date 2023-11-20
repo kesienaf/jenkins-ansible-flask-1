@@ -9,5 +9,5 @@
 
   tasks:
     - name: Start App
-      command: python3 /home/centos/jenkins-ansible-flask-1/app.py 
+      command: "timeout 1m python3 /home/centos/jenkins-ansible-flask-1/app.py"
 ...
