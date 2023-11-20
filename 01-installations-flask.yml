@@ -39,9 +39,7 @@
       when: ansible_distribution == "Amazon"
 
     - name: Install EPEL repository
-      dnf:
-        name: epel-release
-        state: present
+      shell: "amazon-linux-extras install epel -y"
       when: ansible_distribution == "Amazon"
 
     - name: Install required packages
