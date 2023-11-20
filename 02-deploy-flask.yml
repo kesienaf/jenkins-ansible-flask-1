@@ -4,12 +4,12 @@
   become: yes
 
   vars:
-    flask_app_directory: /home/centos/jenkins-ansible-flask-1
-    flask_app_repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
+    flask_app_directory: /home/centos/flask-repo
+    flask_app_repo: https://github.com/kesienaf/flask-repo.git
 
   tasks:
     - name: Start App
-      command: "nohup python3 /home/centos/jenkins-ansible-flask-1/app.py &"
+      command: "nohup python3 /home/centos/flask-repo/app.py &"
       async: 60
       poll: 0
     
