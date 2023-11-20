@@ -6,20 +6,21 @@
   vars:
     flask_app_directory: /home/centos/jenkins-ansible-flask-1
     flask_app_repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
+    package_manager: "{{ 'yum' if ansible_user == 'centos' else 'dnf' }}"
 
   tasks:
     - name: Update package cache
-      yum:
+      "{{ package_manager }}":
         name: '*'
         state: latest
 
     - name: Install EPEL repository
-      yum:
+      "{{ package_manager }}":
         name: epel-release
         state: present
 
     - name: Install required packages
-      yum:
+      "{{ package_manager }}":
         name:
           - python3
           - python3-devel
