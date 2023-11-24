@@ -1,29 +1,36 @@
 pipeline {
     agent none
     stages {
-        stage('Clone Repo and Build') {
+         stage('Clone Repo and Build the Flask App) {
             agent {
                 label 'node-2'
             }
             steps {
+                echo 'Clone and Build'
                 script {
-                    // Clone and Build the App
-                    sh 'ansible-playbook /home/centos/jenkins-ansible-flask-1/01-installations-flask.yml -i /home/centos/jenkins-ansible-flask-1/hosts.ini'
+                    // Clone and Build the Flask App
+                    ansiblePlaybook(
+                        playbook: '/home/centos/jenkins-ansible-flask-1/01-installations-flask.yml',
+                        inventory: '/home/centos/jenkins-ansible-flask-1/hosts.ini'
+                    )
                 }
             }
         }
-
-        stage('Deploy with Ansible') {
+         stage('Deploy the Flask App with Ansible') {
             agent {
                 label 'node-2'
             }
             steps {
+                echo 'Start the Flask App'
                 script {
-                    // Start the app
-                    sh 'ansible-playbook /home/centos/jenkins-ansible-flask-1/02-deploy-flask.yml -i /home/centos/jenkins-ansible-flask-1/hosts.ini'
+                    // Start the Flask app
+                    ansiblePlaybook(
+                        playbook: '/home/centos/jenkins-ansible-flask-1/02-deploy-flask.yml',
+                        inventory: '/home/centos/jenkins-ansible-flask-1/hosts.ini'
+                    )
+                }
             }
         }
-    }
     }
     post {
         success {
