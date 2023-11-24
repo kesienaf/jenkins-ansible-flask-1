@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-         stage('Clone Repo and Build the Flask App) {
+         stage('Clone Repo and Build the Flask App') {
             agent {
                 label 'node-2'
             }
