@@ -123,68 +123,10 @@
         name: firewalld
         state: restarted
       become: yes
-
-    - name: Create Nginx sites-available directory
-      file:
-        path: /etc/nginx/sites-available
-        state: directory
-
-    - name: Configure Nginx
-      template:
-        src: nginx.conf.j2
-        dest: /etc/nginx/sites-available/flask_app
-      notify:
-        - restart nginx
-
-    - name: Create Nginx sites-enabled directory
-      file:
-        path: /etc/nginx/sites-enabled
-        state: directory
-
-    - name: Create symbolic link for Nginx configuration
-      file:
-        src: /etc/nginx/sites-available/flask_app
-        dest: /etc/nginx/sites-enabled/flask_app
-        state: link
-      notify:
-        - restart nginx
-
-    - name: Start Nginx service
-      service:
-        name: nginx
-        state: started
-
-    - name: Create Supervisor conf.d directory
-      file:
-        path: /etc/supervisor/conf.d
-        state: directory
-
-    - name: Install Supervisor
-      yum:
-        name: supervisor
-        state: present
-      when: ansible_distribution == 'CentOS'
-
-    - name: Configure Supervisor
-      template:
-        src: supervisor.conf.j2
-        dest: /etc/supervisor/conf.d/flask_app.conf
-      notify:
-        - restart supervisor
   
   handlers:
     - name: restart firewalld
       service:
         name: firewalld
-        state: restarted
-
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted
-    
-    - name: restart supervisor
-      service:
-        name: supervisord # Use 'supervisord' as the service name
         state: restarted
 ...
