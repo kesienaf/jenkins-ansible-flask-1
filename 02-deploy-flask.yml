@@ -3,10 +3,6 @@
   hosts: g1
   become: yes
 
-  vars:
-    flask_app_directory: /home/centos/jenkins-ansible-flask-1
-    flask_app_repo: https://github.com/kesienaf/jenkins-ansible-flask-1.git
-
   tasks:
     - name: Start App
       command: "nohup python3 /home/centos/jenkins-ansible-flask-1/app.py &"
