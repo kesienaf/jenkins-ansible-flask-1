@@ -96,22 +96,6 @@
 
     - name: Configure Firewall
       firewalld:
-        port: 8000/tcp
-        permanent: yes
-        state: enabled
-      notify:
-        - restart firewalld
-
-    - name: Configure Firewall
-      firewalld:
-        port: 80/tcp
-        permanent: yes
-        state: enabled
-      notify:
-        - restart firewalld
-
-    - name: Configure Firewall
-      firewalld:
         port: 5000/tcp
         permanent: yes
         state: enabled
@@ -123,10 +107,4 @@
         name: firewalld
         state: restarted
       become: yes
-  
-  handlers:
-    - name: restart firewalld
-      service:
-        name: firewalld
-        state: restarted
 ...
