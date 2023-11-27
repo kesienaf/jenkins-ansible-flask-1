@@ -161,6 +161,11 @@
       command: ufw allow 5000
       become: yes
       when: ansible_distribution == 'Ubuntu'
+    
+    - name: Configure UFW for Ubuntu
+      command: ufw allow 22
+      become: yes
+      when: ansible_distribution == 'Ubuntu'
 
     - name: Restart firewalld for CentOS
       systemd:
