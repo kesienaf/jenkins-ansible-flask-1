@@ -5,18 +5,18 @@
 
   tasks:
     - name: Start Flask App
-      command: "nohup /home/{{ ansible_user }}/jenkins-ansible-flask-1/venv/bin/python /home/{{ ansible_user }}/jenkins-ansible-flask-1/app.py &"
+      command: "nohup python3 /home/centos/jenkins-ansible-flask-1/app.py &"
       async: 60
       poll: 0
       become_user: "{{ ansible_user }}"
-      when: "'centos' in ansible_distribution"
+      when: ansible_distribution == 'CentOS'
 
     - name: Start Flask App
-      command: "nohup /home/{{ ansible_user }}/jenkins-ansible-flask-1/venv/bin/python /home/{{ ansible_user }}/jenkins-ansible-flask-1/app.py &"
+      command: "nohup python3 /home/ubuntu/jenkins-ansible-flask-1/app.py &"
       async: 60
       poll: 0
       become_user: "{{ ansible_user }}"
-      when: "'ubuntu' in ansible_distribution"
+      when: ansible_distribution == 'Ubuntu'
 
     - name: Delay stopping Flask app
       pause:
