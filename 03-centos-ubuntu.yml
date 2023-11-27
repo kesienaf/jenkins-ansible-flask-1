@@ -99,7 +99,6 @@
         - Werkzeug
         - Jinja2
         - Flask
-      ignore_errors: yes
       when: ansible_distribution == 'Ubuntu'
       become: yes
 
