@@ -102,11 +102,8 @@
       when: ansible_distribution == 'Ubuntu'
       become: yes
 
-    - name: Uninstall 'blinker' separately
-      pip:
-        name: blinker
-        executable: /usr/local/bin/pip
-        state: absent
+    - name: Manually remove 'blinker'
+      command: "rm -rf {{ flask_app_directory }}/venv/lib/python3*/site-packages/blinker"
       when: ansible_distribution == 'Ubuntu'
       become: yes
 
