@@ -21,18 +21,4 @@
     - name: Delay stopping Flask app
       pause:
         seconds: 60
-
-    - name: Find and Kill Flask Process
-      shell: "pkill -f 'app.py'"
-      ignore_errors: yes  # Ignore errors if the process is not found
-      when: ansible_distribution == 'CentOS'
-    
-    - name: Find and Kill Flask Process
-      command: "killall -r 'python3 /home/centos/jenkins-ansible-flask-1/app.py' || true"
-      ignore_errors: yes
-      when: ansible_distribution == 'Ubuntu'
-
-    - name: Wait for Process to be Killed
-      pause:
-        seconds: 5  # Adjust the duration as needed
 ...
