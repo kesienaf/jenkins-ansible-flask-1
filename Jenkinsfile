@@ -10,7 +10,7 @@ pipeline {
                 script {
                     // Clone and Build the Flask App
                     ansiblePlaybook(
-                        playbook: '/home/centos/jenkins-ansible-flask-1/01-installations-flask.yml',
+                        playbook: '/home/centos/jenkins-ansible-flask-1/03-centos-ubuntu.yml',
                         inventory: '/home/centos/jenkins-ansible-flask-1/hosts.ini'
                     )
                 }
@@ -25,7 +25,7 @@ pipeline {
                 script {
                     // Start the Flask app
                     ansiblePlaybook(
-                        playbook: '/home/centos/jenkins-ansible-flask-1/02-deploy-flask.yml',
+                        playbook: '/home/centos/jenkins-ansible-flask-1/04-deploy-centos-ubuntu.yml',
                         inventory: '/home/centos/jenkins-ansible-flask-1/hosts.ini'
                     )
                 }
