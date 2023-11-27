@@ -28,7 +28,7 @@
       when: ansible_distribution == 'CentOS'
     
     - name: Find and Kill Flask Process
-      command: "killall -r 'python3 /home/centos/jenkins-ansible-flask-1/app.py' || true"
+      shell: "pkill -f 'app.py' || true"
       ignore_errors: yes
       when: ansible_distribution == 'Ubuntu'
 ...
