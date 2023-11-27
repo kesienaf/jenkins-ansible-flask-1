@@ -119,6 +119,7 @@
         name: Flask
         executable: /usr/local/bin/pip
         state: present
+        extra_args: "--ignore-installed"
       when: ansible_distribution == 'Ubuntu'
 
     - name: Install Gunicorn
