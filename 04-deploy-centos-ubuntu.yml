@@ -28,7 +28,7 @@
       when: ansible_distribution == 'CentOS'
     
     - name: Find and Kill Flask Process
-      shell: "kill -TERM $(pgrep -f 'app.py')"
+      shell: "pkill -f 'app.py' || true"
       ignore_errors: yes
       when: ansible_distribution == 'Ubuntu'
 
