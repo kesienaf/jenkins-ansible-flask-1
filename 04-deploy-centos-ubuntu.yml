@@ -25,6 +25,12 @@
     - name: Find and Kill Flask Process
       shell: "pkill -f 'app.py'"
       ignore_errors: yes  # Ignore errors if the process is not found
+      when: ansible_distribution == 'CentOS'
+    
+    - name: Find and Kill Flask Process
+      shell: "kill -TERM $(pgrep -f 'app.py')"
+      ignore_errors: yes
+      when: ansible_distribution == 'Ubuntu'
 
     - name: Wait for Process to be Killed
       pause:
