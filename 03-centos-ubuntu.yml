@@ -54,7 +54,7 @@
         chdir: "{{ flask_app_directory }}"
       environment:
         PATH: "{{ flask_app_directory }}/venv/bin:{{ ansible_env.PATH }}"
-      when: ansible_distrubution == 'CentOS'
+      when: ansible_distribution == 'CentOS'
 
     - name: Install pip using apt
       apt:
