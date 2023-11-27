@@ -95,7 +95,7 @@
         - MarkupSafe
         - itsdangerous
         - click
-        - blinker
+        # Exclude 'blinker' from the list
         - Werkzeug
         - Jinja2
         - Flask
