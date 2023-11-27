@@ -102,6 +102,14 @@
       when: ansible_distribution == 'Ubuntu'
       become: yes
 
+    - name: Uninstall 'blinker' separately
+      pip:
+        name: blinker
+        executable: /usr/local/bin/pip
+        state: absent
+      when: ansible_distribution == 'Ubuntu'
+      become: yes
+
     - name: Install Flask
       pip:
         name: Flask
