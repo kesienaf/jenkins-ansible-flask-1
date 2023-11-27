@@ -1,0 +1,32 @@
+---
+- name: Start Flask Web App
+  hosts: g1
+  become: yes
+
+  tasks:
+    - name: Start Flask App
+      command: "nohup /home/{{ ansible_user }}/jenkins-ansible-flask-1/venv/bin/python /home/{{ ansible_user }}/jenkins-ansible-flask-1/app.py &"
+      async: 60
+      poll: 0
+      become_user: "{{ ansible_user }}"
+      when: "'centos' in ansible_distribution"
+
+    - name: Start Flask App
+      command: "nohup /home/{{ ansible_user }}/jenkins-ansible-flask-1/venv/bin/python /home/{{ ansible_user }}/jenkins-ansible-flask-1/app.py &"
+      async: 60
+      poll: 0
+      become_user: "{{ ansible_user }}"
+      when: "'ubuntu' in ansible_distribution"
+
+    - name: Delay stopping Flask app
+      pause:
+        seconds: 60
+
+    - name: Find and Kill Flask Process
+      shell: "pkill -f 'app.py'"
+      ignore_errors: yes  # Ignore errors if the process is not found
+
+    - name: Wait for Process to be Killed
+      pause:
+        seconds: 5  # Adjust the duration as needed
+...
