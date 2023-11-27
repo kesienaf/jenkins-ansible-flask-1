@@ -27,8 +27,6 @@
           - python3-devel
           - python3-pip
           - git
-          - nginx
-          - supervisor
         state: present
       when: ansible_distribution == 'CentOS'
 
@@ -70,11 +68,6 @@
     - name: Activate virtual environment
       command: "/bin/bash -c 'source {{ flask_app_directory }}/venv/bin/activate'"
       become: yes
-
-    - name: Install Flask dependencies
-      pip:
-        requirements: "{{ flask_app_directory }}/requirements.txt"
-        virtualenv: "{{ flask_app_directory }}/venv"
 
     - name: Install Flask
       pip:
