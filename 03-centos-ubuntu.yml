@@ -87,6 +87,22 @@
       command: "/bin/bash -c 'source {{ flask_app_directory }}/venv/bin/activate'"
       become: yes
 
+    - name: Uninstall existing packages (if present)
+      pip:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - MarkupSafe
+        - itsdangerous
+        - click
+        - blinker
+        - Werkzeug
+        - Jinja2
+        - Flask
+      ignore_errors: yes
+      when: ansible_distribution == 'Ubuntu'
+      become: yes
+
     - name: Install Flask
       pip:
         name: Flask
